@@ -4,7 +4,8 @@
 1 - Creamos el projecto <code> ng new EntendiendoNGRX </code> <br />
 2 - Agregamos NGRX <code>npm install @ngrx/core @ngrx/store --save</code> (tag "01")<br />
 3 - Explicación del "estado de la aplicación" <br />
-
+4 - Creacion de nuestros estado de aplicación <br />
+5 - Lectura de los estados de la aplicación mediante selectores <br />
 
 
 # Explicaciones
@@ -41,14 +42,45 @@ export interface IAppState { <br />
 `Usamos 'readonly' para asegurarnos la inmutabilidad en el tiempo de compilación, y proporciona la implementación inmutable`
   <br />
 
-<h3> Paso 4 </h4>
+<h3> Paso 4 </h3>
 
 Vamos a empezar con un simple counter, para ello vamos a crear 'app/models/IAppState.ts' y 'app/models/ICounter.ts' <br />
 En ICounter simplemente vamos a declarar que tiene un valor actual del tipo number y en IAppState vamos a declarar que tiene
 un counter del tipo ICounter.
 
  
- 
+<h3> paso 5 </h3>
+
+Para leer el estado de una aplicación en Redux, necesitamos del método select() que esta en la clase de ngrx's store. <br />
+Este método crea y devuelve un Observable que está enlazado a una propiedad especifica en el estado de la aplicación. <br />
+<br />
+<code> store.select('counter'); // Returns Observable<Counter> </code>
+<br />
+Y para obtener el valor actual, podemos pasar en un String Array, en la que cada posición tiene una sola propiedad del estado
+de la aplicación, una a la vez en el orden especificado: 
+<br />
+<code>store.select(['counter', 'currentValue']); // Returns Observable<number></code>
+<br />
+Mientras que select() permite que varias variaciones del string sean pasadas, tiene su defectos, es decir,
+no sabremos realmente si está funcionando correctamnete hasta que ejecutemos el código. <br />
+Debito a esto, select() le permite seleccionar valores usando funciones tambien, lo que 
+hace que las cosas sean más seguras y sus selectores serán más "reactorables".
+
+<code> store.select(appState => appState.counter.currentValue); </code>
+
+<h5>Creando un servicio para el counter</h5>
+
+Si bien podemos inyectar el Store y elegir lo valores directamente en nuestro componente, se considera que es una práctica 
+recomendable incluir esta funcionalidad en servicios independientes.
+Este enfoque encapsula toda la lógica de selección y elimina cualquier duplicación donde la ruta de selección se repite en 
+toda la aplicación.
+<br />
+Para esto veamos el archivo 'app/services/counter.service.ts' <br />
+Debido a que select() devuelve un Observable, el método getCurrentValue() también aplica un 
+filter() para asegurar que los suscriptores no reciben valores falsos. 
+Esto simplifica grandemente el código y las plantillas en sus componentes, puesto que no tienen que 
+considerar repetidamente el caso del falsey dondequiera que se utilice el valor.
+<br />
  
  
  
