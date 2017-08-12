@@ -30,15 +30,31 @@ con las convenciones de nomenclatura utilizada en su proyecto.
 <br />
 app/models/IappState.ts
 <code>
-export interface IAppState {
-  readonly background: Background;
-  readonly colors: Colors;
-  readonly localization: Localization;
-  readonly login: Login;
-  readonly ShowMainNavigation: boolean;
+export interface IAppState { <br />
+  readonly background: Background; <br />
+  readonly colors: Colors; <br />
+  readonly localization: Localization; <br />
+  readonly login: Login; <br />
+  readonly ShowMainNavigation: boolean; <br />
 }
 </code>
 `Usamos 'readonly' para asegurarnos la inmutabilidad en el tiempo de compilación, y proporciona la implementación inmutable`
+  <br />
 
+<h3> Paso 4 </h4>
+
+Vamos a empezar con un simple counter, para ello vamos a crear 'app/models/IAppState.ts' y 'app/models/ICounter.ts' <br />
+En ICounter simplemente vamos a declarar que tiene un valor actual del tipo number y en IAppState vamos a declarar que tiene
+un counter del tipo ICounter.
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <br /> <br /> <br />
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
