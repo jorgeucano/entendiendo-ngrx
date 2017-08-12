@@ -6,7 +6,7 @@
 3 - Explicación del "estado de la aplicación" <br />
 4 - Creacion de nuestros estado de aplicación <br />
 5 - Lectura de los estados de la aplicación mediante selectores <br />
-
+6 - Modificación del estado de la aplicación mediante acciones de distribución. <br />
 
 # Explicaciones
 
@@ -82,10 +82,25 @@ Esto simplifica grandemente el código y las plantillas en sus componentes, pues
 considerar repetidamente el caso del falsey dondequiera que se utilice el valor.
 <br />
  
- 
- 
- 
- 
+ <h3>Modificación del estado de la aplicación mediante acciones de distribución</h3>
+La mayoría de las aplicaciones Redux tienen un conjunto de funciones, llamadas "creadores de acciones"(action creators), que se utilizan para configurar y enviar acciones.
+En Angular, es conveniente definir a sus creadores de acción como servicios @Injectable(), desacoplando el despacho, la creación y la lógica de efectos secundarios de las clases @Component en su aplicación.
+<br />
+<h5> Actions sincronos </h5>
+Para eso vayamos a <code>app/store/counter/counter.actions.ts</code> <br />
+Como se puede ver, los creadores de acciones son funciones simples que distribuyen objetos de acción que contienen más información que describe la modificación de estado. <br />
+
+Claro <code>app/store/CreateAction</code> no existe, para eso vamos a crearlo y vemos que hace <br/>
+La propiedad type es un String que se utilizada para identificar de forma exclusiva su acción en su aplicación. Es una convención común usar lisp-case (como MY_ACTION), sin embargo, usted es libre de usar cualquier estilo de cubierta que haga a su equipo, siempre y cuando sea consistente en todo el proyecto.
+La propiedad de payload proporciona una forma de pasar datos adicionales a otras partes de Redux, y es totalmente opcional.
+
+
+<h5> Actions asyncronos </h5>
+
+Este patrón "ActionCreatorService" es útil si debe manejar acciones asíncronas o condicionales.
+
+En el creador de acciones incrementIfOdd(), creamos una suscripción única al currentValue del contador en el estado de la aplicación. A partir de ahí, verificamos si es extraño antes de enviar una acción.
+En el creador de acción incrementAsync(), estamos retrasando la llamada real a dispatch(). Hemos creado una promesa que se resolverá después de la demora. Una vez que se resuelve la Promesa, podemos enviar una acción para incrementar el contador.
  
  <br /> <br /> <br />
 
