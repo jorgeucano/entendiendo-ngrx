@@ -29,7 +29,7 @@ Para definir el estado de la aplicación, hay que utilizar una interfaz llamada 
 con las convenciones de nomenclatura utilizada en su proyecto.
 <br />
 app/models/IappState.ts
-```
+<code>
 export interface IAppState {
   readonly background: Background;
   readonly colors: Colors;
@@ -37,7 +37,7 @@ export interface IAppState {
   readonly login: Login;
   readonly ShowMainNavigation: boolean;
 }
-```
+</code>
 `Usamos 'readonly' para asegurarnos la inmutabilidad en el tiempo de compilación, y proporciona la implementación inmutable`
 
 
