@@ -105,6 +105,8 @@ En el creador de acción incrementAsync(), estamos retrasando la llamada real a 
  
 <h3> 7 - Revisión de Reductores(reducers) y Funciones Puras </h3>
 
+Uno de los conceptos básicos de Redux es el reductor(reducer). Un reductor es una función con la firma <code>(accumulator: T, item: U) => T</code>. Los reductores se usan a menudo en JavaScript a través del método Array.reduce, que itera sobre cada uno de los elementos de la matriz y acumula un solo valor como resultado. Los reductores deben ser funciones puras, lo que significa que no generan efectos secundarios.
+Un ejemplo simple de un reductor es la función suma:
 <code>
 let x = [1, 2, 3].reduce((sum, number) => sum + number, 0);
 // x == 6
