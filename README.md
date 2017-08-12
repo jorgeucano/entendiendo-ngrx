@@ -7,6 +7,7 @@
 4 - Creacion de nuestros estado de aplicación <br />
 5 - Lectura de los estados de la aplicación mediante selectores <br />
 6 - Modificación del estado de la aplicación mediante acciones de distribución. <br />
+7 - Revisión de Reductores(reducers) y Funciones Puras <br />
 
 # Explicaciones
 
@@ -102,6 +103,15 @@ Este patrón "ActionCreatorService" es útil si debe manejar acciones asíncrona
 En el creador de acciones incrementIfOdd(), creamos una suscripción única al currentValue del contador en el estado de la aplicación. A partir de ahí, verificamos si es extraño antes de enviar una acción.
 En el creador de acción incrementAsync(), estamos retrasando la llamada real a dispatch(). Hemos creado una promesa que se resolverá después de la demora. Una vez que se resuelve la Promesa, podemos enviar una acción para incrementar el contador.
  
+<h3> 7 - Revisión de Reductores(reducers) y Funciones Puras </h3>
+
+<code>
+let x = [1, 2, 3].reduce((sum, number) => sum + number, 0);
+// x == 6
+</code>
+
+
+
  <br /> <br /> <br />
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
