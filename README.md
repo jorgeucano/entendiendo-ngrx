@@ -8,7 +8,7 @@
 5 - Lectura de los estados de la aplicación mediante selectores <br />
 6 - Modificación del estado de la aplicación mediante acciones de distribución. <br />
 7 - Revisión de Reductores(reducers) y Funciones Puras <br />
-
+8 - Reductores como Gestor de estados (State Mananger )  <br />
 # Explicaciones
 
 <h3> Pasos 1 y 2 : </h3>
@@ -111,6 +111,41 @@ Un ejemplo simple de un reductor es la función suma:
 let x = [1, 2, 3].reduce((sum, number) => sum + number, 0);
 // x == 6
 </code>
+
+<h3> 8 - Reductores como Gestor de estados (State Mananger ) </h3>
+
+Reductores son una idea simple que resulta ser muy potente. Con Redux, reproducir una serie de acciones en el reductor y obtener su nuevo estado de aplicación como resultado.
+Los reductores en una aplicación Redux no deben mutar el estado, sino devolver una copia de él, y ser libre de efectos secundarios. Esto le anima a pensar en su aplicación como interfaz de usuario que se "calcula" a partir de una serie de acciones en el tiempo.
+
+Veamos un "reducer" simple en <code>app/store/counter/counter.reducer.ts</code>
+<br />
+Podemos ver aquí que estamos pasando en un estado inicial (el número actual) y una Acción. Para manejar cada acción, un enfoque común es usar una instrucción switch. En lugar de que cada reductor necesite subscribirse explícitamente al distribuidor, cada acción se pasa a cada reductor, que maneja las acciones en las que está interesado y luego devuelve el nuevo estado al siguiente reductor.
+Los reductores deben ser libres de efectos secundarios. Esto significa que no deben modificar las cosas fuera de su ámbito de aplicación. Deben simplemente calcular el siguiente estado de aplicación como una función pura de los argumentos del reductor.
+Por esta razón, las operaciones que producen efectos secundarios, como la actualización de un registro en una base de datos, la generación de un id, etc., deben tratarse en otras partes de la aplicación, como en los creadores de acciones o mediante @ngrx / effects.
+
+<br />
+Otra consideración al crear sus reductores es asegurarse de que son 'inmutables' y no modifican el estado de su aplicación. Si modifica el estado de la aplicación, puede provocar un comportamiento inesperado. Hay algunas maneras de ayudar a mantener la inmutabilidad en sus reductores. Una forma es mediante el uso de nuevas características de ES6 como Object.assign() o el operador de propagación para arrays.
+<br />
+<code>/app/model/ICounter.ts</code>
+<br />
+<code>
+// ...
+
+export function setCounterCurrentValue(counter: Counter, currentValue: number): Counter {
+  return Object.assign({}, counter, { currentValue });
+}
+
+// ...
+</code>
+<br />
+Aquí, la función setCounterCurrentValue() crea un nuevo objeto Counter que sobrescribe la propiedad counter.currentValue con un nuevo valor mientras mantiene las referencias y los valores de todas las demás propiedades del contador.
+<br />
+Vamos a actualizar nuestro reductor para utilizar este concepto <code>/app/store/counter/counter.reducer.ts</code> <br />
+Con cada acción, tomamos el estado de contador existente y creamos un nuevo estado con el valor actualizado (como counter.currentValue + 1).
+
+
+
+
 
 
 
